@@ -1,0 +1,3 @@
+module Scopie
+  # Your code goes here...
+end
