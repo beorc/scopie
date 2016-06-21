@@ -1,0 +1,10 @@
+require 'bundler/gem_tasks'
+
+task :console do
+  require 'pry'
+  lib = File.expand_path('lib')
+  $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+  require 'scopie'
+  ARGV.clear
+  Pry.start
+end

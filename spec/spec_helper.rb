@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'scopie'
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -23,4 +25,6 @@ RSpec.configure do |config|
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
   end
+
+  config.after(:each) { SubjectClass.send(:reset_scopes_configuration!) }
 end
