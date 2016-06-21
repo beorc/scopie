@@ -1,4 +1,5 @@
-$:.push File.expand_path('../lib', __FILE__)
+# frozen_string_literal: true
+$LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 # Maintain your gem's version:
 require 'scopie/version'
@@ -17,4 +18,5 @@ Gem::Specification.new do |s|
   s.files = Dir['{lib}/**/*', 'LICENSE', 'README.md']
 
   s.add_development_dependency 'rspec', '~> 3.4'
+  s.add_development_dependency 'rubocop', '~> 0.40'
 end
