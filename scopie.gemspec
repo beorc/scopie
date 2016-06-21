@@ -12,7 +12,9 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/beorc/scopie'
   s.summary     = 'Maps HTTP-parameters to your resource scopes'
   s.description = 'Minimal mapping of incoming parameters to named scopes in your resources through OO design and pure Ruby classes'
-  s.license     = "MIT"
+  s.license     = 'MIT'
 
   s.files = Dir['{lib}/**/*', 'LICENSE', 'README.md']
+
+  s.add_development_dependency 'rspec', '~> 3.4'
 end
