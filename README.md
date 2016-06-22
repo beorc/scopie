@@ -71,3 +71,9 @@ Scopie supports several options:
 * `:except` - In which actions the scope is not applied.
 
 * `:default` - Default value for the scope. Whenever supplied the scope is always called.
+
+## Thanks
+
+Scopie was inspired by [has_scope](http://github.com/plataformatec/has_scope) and [pundit](http://github.com/elabs/pubdit)
+
+Thanks to both.
