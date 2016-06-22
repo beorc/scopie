@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'support/subject_class'
 
 describe Scopie do

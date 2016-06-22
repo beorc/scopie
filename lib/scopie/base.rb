@@ -31,7 +31,7 @@ class Scopie::Base
   private
 
   def scope_value(scope_name, options, hash)
-    return hash[scope_name] if hash.has_key?(scope_name)
+    return hash[scope_name] if hash.key?(scope_name)
     options[:default]
   end
 
@@ -44,11 +44,13 @@ class Scopie::Base
       return false if methods_white_list.any? && !methods_white_list.include?(method)
     end
 
-    hash.has_key?(scope_name) || options.has_key?(:default)
+    hash.key?(scope_name) || options.key?(:default)
   end
 
   def self.reset_scopes_configuration!
     @scopes_configuration = {}
   end
+
+  private_class_method :reset_scopes_configuration!
 
 end

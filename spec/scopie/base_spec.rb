@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 describe Scopie::Base do
   let(:scope_name) { :test_scope }
   let(:only_method_name) { :only_test_method }
