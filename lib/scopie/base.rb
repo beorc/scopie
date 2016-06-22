@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Scopie::Base
+  TRUE_VALUES = ['true', true, '1', 1]
 
   def self.scopes_configuration
     instance_variable_get(:@scopes_configuration) || {}
@@ -31,8 +32,17 @@ class Scopie::Base
   private
 
   def scope_value(scope_name, options, hash)
-    return hash[scope_name] if hash.key?(scope_name)
+    return coerce_value_type(hash[scope_name], options[:type]) if hash.key?(scope_name)
     options[:default]
+  end
+
+  def coerce_value_type(value, type)
+    return value unless type
+    send("coerce_to_#{type}", value)
+  end
+
+  def coerce_to_boolean(value)
+    TRUE_VALUES.include? value
   end
 
   def scope_applicable?(scope_name, options, hash, method)

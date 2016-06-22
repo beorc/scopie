@@ -87,5 +87,18 @@ describe Scopie do
         end
       end
     end
+
+    context 'given the "type" option' do
+      let(:options) { { type: :boolean } }
+
+      context 'given a hash with the scope key' do
+        let(:hash) { { scope_name => 'true' } }
+
+        it 'should call the scope method on target and pass coerced value' do
+          expect(target).to receive(scope_name).once.with(true).and_return(target)
+          Scopie.apply_scopes(target, hash, scopie: scopie_class.new)
+        end
+      end
+    end
   end
 end
