@@ -8,6 +8,7 @@ describe Scopie do
 
   describe '.apply_scopes' do
     let(:scopie_class) { SubjectClass }
+    let(:scopie_instance) { scopie_class.new }
     let(:scope_name) { :test_scope }
     let(:another_scope_name) { :another_scope }
     let(:target) { double }
@@ -18,7 +19,7 @@ describe Scopie do
 
     it 'should sequently call scope methods on target' do
       expect(target).to receive(scope_name).once.with(hash[scope_name])
-      Scopie.apply_scopes(target, hash, scopie: scopie_class.new)
+      Scopie.apply_scopes(target, hash, scopie: scopie_instance)
     end
 
     context 'given the "only" option' do
@@ -29,7 +30,7 @@ describe Scopie do
 
         it 'should call the scope method on target' do
           expect(target).to receive(scope_name).once.with(hash[scope_name])
-          Scopie.apply_scopes(target, hash, method: method_name, scopie: scopie_class.new)
+          Scopie.apply_scopes(target, hash, method: method_name, scopie: scopie_instance)
         end
       end
 
@@ -38,7 +39,7 @@ describe Scopie do
 
         it 'should not call the scope method on target' do
           expect(target).not_to receive(scope_name)
-          Scopie.apply_scopes(target, hash, method: method_name, scopie: scopie_class.new)
+          Scopie.apply_scopes(target, hash, method: method_name, scopie: scopie_instance)
         end
       end
     end
@@ -51,7 +52,7 @@ describe Scopie do
 
         it 'should call the scope method on target' do
           expect(target).to receive(scope_name).once.with(hash[scope_name])
-          Scopie.apply_scopes(target, hash, method: method_name, scopie: scopie_class.new)
+          Scopie.apply_scopes(target, hash, method: method_name, scopie: scopie_instance)
         end
       end
 
@@ -60,7 +61,7 @@ describe Scopie do
 
         it 'should not call the scope method on target' do
           expect(target).not_to receive(scope_name)
-          Scopie.apply_scopes(target, hash, method: method_name, scopie: scopie_class.new)
+          Scopie.apply_scopes(target, hash, method: method_name, scopie: scopie_instance)
         end
       end
     end
@@ -68,7 +69,7 @@ describe Scopie do
     context 'given the "default" option' do
       let(:options) { { default: :default_value } }
       before(:each) do
-        expect(target).to receive(another_scope_name).once.with(options[:default])
+        expect(scopie_instance).to receive(another_scope_name).once.with(target, options[:default], hash)
       end
 
       context 'given a hash without the scope key' do
@@ -76,14 +77,14 @@ describe Scopie do
 
         it 'should call the scope method on target with default value' do
           expect(target).to receive(scope_name).once.with(options[:default]).and_return(target)
-          Scopie.apply_scopes(target, hash, scopie: scopie_class.new)
+          Scopie.apply_scopes(target, hash, scopie: scopie_instance)
         end
       end
 
       context 'given a hash with the scope key' do
         it 'should not call the scope method on target' do
           expect(target).to receive(scope_name).once.with(hash[scope_name]).and_return(target)
-          Scopie.apply_scopes(target, hash, scopie: scopie_class.new)
+          Scopie.apply_scopes(target, hash, scopie: scopie_instance)
         end
       end
     end
@@ -96,8 +97,17 @@ describe Scopie do
 
         it 'should call the scope method on target and pass coerced value' do
           expect(target).to receive(scope_name).once.with(true).and_return(target)
-          Scopie.apply_scopes(target, hash, scopie: scopie_class.new)
+          Scopie.apply_scopes(target, hash, scopie: scopie_instance)
         end
+      end
+    end
+
+    context 'given the scope metod defined in scopie' do
+      let(:hash) { { another_scope_name => 'true' } }
+
+      it 'should call the scope method on scopie' do
+        expect(scopie_instance).to receive(another_scope_name).once.with(target, hash[another_scope_name], hash)
+        Scopie.apply_scopes(target, hash, scopie: scopie_instance)
       end
     end
   end
