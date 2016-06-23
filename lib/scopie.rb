@@ -8,4 +8,8 @@ module Scopie
     scopie.apply_scopes(target, hash, method)
   end
 
+  def self.current_scopes(hash, method: nil, scopie: Scopie::Base.new)
+    scopie.current_scopes(hash, method)
+  end
+
 end

@@ -126,4 +126,21 @@ describe Scopie do
       end
     end
   end
+
+  describe '.current_scopes' do
+    let(:scopie_class) { SubjectClass }
+    let(:scopie_instance) { scopie_class.new }
+    let(:scope_name) { :test_scope }
+    let(:another_scope_name) { :another_scope }
+    let(:target) { double }
+    let(:hash) { { scope_name => 'test' } }
+    let(:options) { Hash.new }
+
+    before(:each) { scopie_class.has_scope(scope_name, another_scope_name, options) }
+
+    it 'should return a hash that contains scopes with its values' do
+      scopes = Scopie.current_scopes(hash, scopie: scopie_instance)
+      expect(scopes).to eq({ scope_name => hash[scope_name] })
+    end
+  end
 end

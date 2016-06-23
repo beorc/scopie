@@ -35,7 +35,7 @@ class Scopie::Base
     end
 
     scopes.compact!
-    scopes
+    scopes.to_h
   end
 
   private
