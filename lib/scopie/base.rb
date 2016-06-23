@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Scopie::Base
-  TRUE_VALUES = ['true', true, '1', 1]
+
+  TRUE_VALUES = ['true', true, '1', 1].freeze
 
   def self.scopes_configuration
     instance_variable_get(:@scopes_configuration) || {}

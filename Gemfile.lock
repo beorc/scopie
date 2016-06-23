@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    scopie (0.4.1)
+    scopie (0.4.3)
 
 GEM
   remote: https://rubygems.org/
