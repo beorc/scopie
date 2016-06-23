@@ -2,6 +2,13 @@
 Minimal mapping of incoming parameters to named scopes in your resources through OO design
 
 Scopie allows you to map incoming controller parameters to named scopes in your resources.
+
+Scopie is the yet another implementation of [has_scope](http://github.com/plataformatec/has_scope). The key differences is dedicated class where
+the scopes are defined. Also, it doesn't depend from ActiveSupport or ActionPack. Please have, a look at [scopie_rails](http://github.com/beorc/scopie_rails)
+if you are using Ruby on Rails framework.
+To override default mapping behavior you don't need to pass a block - just define a method with the same name as scope.
+You can DRY your custom scopes mapping logic by using helper methods defined in scopie class and use the same scopie class in multiple controllers.
+
 Imagine the following model called graduations:
 
 ```ruby
@@ -17,8 +24,9 @@ You can use those named scopes as filters by declaring them on your scopie:
 ```ruby
 class Scopies::GraduationsScopie < Scopie::Base
   has_scope :featured, type: :boolean
-  has_scope :by_degree
-  has_scope :by_period
+  has_scope :by_degree, :by_period
+  has_scope :page, default: 1
+  has_scope :per, default: 30
   
   def by_period(scope, value, _hash)
     scope.by_period(value[:started_at], value[:ended_at])
@@ -74,6 +82,6 @@ Scopie supports several options:
 
 ## Thanks
 
-Scopie was inspired by [has_scope](http://github.com/plataformatec/has_scope) and [pundit](http://github.com/elabs/pubdit)
+Scopie was inspired by [has_scope](http://github.com/plataformatec/has_scope) and [pundit](http://github.com/elabs/pubdit).
 
 Thanks to both.
