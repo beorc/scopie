@@ -78,6 +78,8 @@ Scopie supports several options:
 
 * `:except` - In which actions the scope is not applied.
 
+* `:as` - The key in the params hash expected to find the scope. Defaults to the scope name.
+
 * `:default` - Default value for the scope. Whenever supplied the scope is always called.
 
 ## Thanks

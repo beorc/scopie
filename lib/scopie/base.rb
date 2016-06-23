@@ -31,8 +31,15 @@ class Scopie::Base
 
   private
 
+  def key_name(scope_name, options)
+    key_name = scope_name
+    key_name = options[:as] if options.key?(:as)
+    key_name
+  end
+
   def scope_value(scope_name, options, hash)
-    return coerce_value_type(hash[scope_name], options[:type]) if hash.key?(scope_name)
+    key_name = key_name(scope_name, options)
+    return coerce_value_type(hash[key_name], options[:type]) if hash.key?(key_name)
     options[:default]
   end
 
@@ -54,7 +61,8 @@ class Scopie::Base
       return false if methods_white_list.any? && !methods_white_list.include?(method)
     end
 
-    hash.key?(scope_name) || options.key?(:default)
+    key_name = key_name(scope_name, options)
+    hash.key?(key_name) || options.key?(:default)
   end
 
   def self.reset_scopes_configuration!

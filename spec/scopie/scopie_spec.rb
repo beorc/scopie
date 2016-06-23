@@ -110,5 +110,20 @@ describe Scopie do
         Scopie.apply_scopes(target, hash, scopie: scopie_instance)
       end
     end
+
+    context 'given the "as" option' do
+      let(:scope_name) { :fulltext_search }
+      let(:options) { { as: :search_text } }
+      before(:each) { scopie_class.has_scope(scope_name, options) }
+
+      context 'given a hash with the scope key' do
+        let(:hash) { { options[:as] => 'search text' } }
+
+        it 'should call the scope method on target and pass correct value' do
+          expect(target).to receive(scope_name).once.with(hash[options[:as]])
+          Scopie.apply_scopes(target, hash, scopie: scopie_instance)
+        end
+      end
+    end
   end
 end
