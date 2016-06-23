@@ -7,6 +7,10 @@ class Scopie::Base
     instance_variable_get(:@scopes_configuration) || {}
   end
 
+  def scopes_configuration
+    self.class.scopes_configuration
+  end
+
   def self.has_scope(*scopes, **options)
     @scopes_configuration ||= {}
 
@@ -15,21 +19,34 @@ class Scopie::Base
     end
   end
 
-  def apply_scope(scope_name, options, target, hash, method = nil)
-    hash ||= {}
+  def apply_scopes(target, hash, method = nil)
+    current_scopes(hash, method).each do |scope_name, value|
+      target = apply_scope(scope_name, target, value, hash)
+    end
 
-    return target unless scope_applicable?(scope_name, options, hash, method)
+    target
+  end
 
-    value = scope_value(scope_name, options, hash)
+  def current_scopes(hash, method = nil)
+    scopes = scopes_configuration.map do |scope_name, options|
+      next unless scope_applicable?(scope_name, options, hash, method)
+      value = scope_value(scope_name, options, hash)
+      [scope_name, value]
+    end
 
+    scopes.compact!
+    scopes
+  end
+
+  private
+
+  def apply_scope(scope_name, target, value, hash)
     if respond_to?(scope_name)
       public_send(scope_name, target, value, hash)
     else
       target.public_send(scope_name, value)
     end
   end
-
-  private
 
   def key_name(scope_name, options)
     key_name = scope_name
