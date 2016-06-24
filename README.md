@@ -1,4 +1,7 @@
 ## Scopie
+
+[![Code Climate](https://codeclimate.com/github/beorc/scopie/badges/gpa.svg)](https://codeclimate.com/github/beorc/scopie)
+
 Minimal mapping of incoming parameters to named scopes in your resources through OO design
 
 Scopie allows you to map incoming controller parameters to named scopes in your resources.
