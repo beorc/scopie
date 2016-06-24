@@ -12,7 +12,8 @@ describe Scopie do
     let(:scope_name) { :test_scope }
     let(:another_scope_name) { :another_scope }
     let(:target) { double }
-    let(:hash) { { scope_name => 'test' } }
+    let(:scope_value) { 'test' }
+    let(:hash) { { scope_name => scope_value } }
     let(:options) { Hash.new }
 
     before(:each) { scopie_class.has_scope(scope_name, another_scope_name, options) }
@@ -22,6 +23,24 @@ describe Scopie do
       Scopie.apply_scopes(target, hash, scopie: scopie_instance)
     end
 
+    context 'given blank value' do
+      let(:scope_value) { '' }
+
+      it 'should not call the scope method' do
+        expect(target).not_to receive(scope_name)
+        Scopie.apply_scopes(target, hash, scopie: scopie_instance)
+      end
+
+      context 'given the "allow_blank" option' do
+        let(:options) { { allow_blank: true } }
+
+        it 'should call the scope method on target' do
+          expect(target).to receive(scope_name).once.with(scope_value)
+          Scopie.apply_scopes(target, hash, scopie: scopie_instance)
+        end
+      end
+    end
+
     context 'given the "only" option' do
       let(:options) { { only: :index } }
 
@@ -29,7 +48,7 @@ describe Scopie do
         let(:method_name) { :index }
 
         it 'should call the scope method on target' do
-          expect(target).to receive(scope_name).once.with(hash[scope_name])
+          expect(target).to receive(scope_name).once.with(scope_value)
           Scopie.apply_scopes(target, hash, method: method_name, scopie: scopie_instance)
         end
       end

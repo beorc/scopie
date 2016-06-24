@@ -75,8 +75,10 @@ class Scopie::Base
   def scope_applicable?(scope_name, options, hash, method)
     return false unless method_applicable?(method, options)
 
-    key_name = key_name(scope_name, options)
-    reduced_hash(hash, options).key?(key_name) || options.key?(:default)
+    value = scope_value(scope_name, options, hash)
+    is_value_present = value.respond_to?(:empty?) ? !value.empty? : !!value
+
+    is_value_present || !!options[:allow_blank]
   end
 
   def reduced_hash(hash, options)
