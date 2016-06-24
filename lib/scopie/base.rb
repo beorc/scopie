@@ -42,11 +42,13 @@ class Scopie::Base
   private
 
   def apply_scope(scope_name, target, value, hash)
-    if respond_to?(scope_name)
-      public_send(scope_name, target, value, hash)
-    else
-      target.public_send(scope_name, value)
-    end
+    result = if respond_to?(scope_name)
+               public_send(scope_name, target, value, hash)
+             else
+               target.public_send(scope_name, value)
+             end
+
+    result || target
   end
 
   def key_name(scope_name, options)
