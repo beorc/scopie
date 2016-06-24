@@ -111,6 +111,22 @@ describe Scopie do
       end
     end
 
+    context 'given the "in" option' do
+      let(:scope_name) { :fulltext_search }
+      let(:options) { { in: :search } }
+      before(:each) { scopie_class.has_scope(scope_name, options) }
+
+      context 'given a hash with the scope key' do
+        let(:test_value) { 'test search text' }
+        let(:hash) { { options[:in] => { scope_name => test_value } } }
+
+        it 'should call the scope method on target and pass correct value' do
+          expect(target).to receive(scope_name).once.with(test_value)
+          Scopie.apply_scopes(target, hash, scopie: scopie_instance)
+        end
+      end
+    end
+
     context 'given the "as" option' do
       let(:scope_name) { :fulltext_search }
       let(:options) { { as: :search_text } }
@@ -121,6 +137,22 @@ describe Scopie do
 
         it 'should call the scope method on target and pass correct value' do
           expect(target).to receive(scope_name).once.with(hash[options[:as]])
+          Scopie.apply_scopes(target, hash, scopie: scopie_instance)
+        end
+      end
+    end
+
+    context 'given "in" and "as" options' do
+      let(:scope_name) { :fulltext_search }
+      let(:options) { { as: :search_text, in: :search } }
+      before(:each) { scopie_class.has_scope(scope_name, options) }
+
+      context 'given a hash with the scope key' do
+        let(:test_value) { 'test search text' }
+        let(:hash) { { options[:in] => { options[:as] => test_value } } }
+
+        it 'should call the scope method on target and pass correct value' do
+          expect(target).to receive(scope_name).once.with(test_value)
           Scopie.apply_scopes(target, hash, scopie: scopie_instance)
         end
       end

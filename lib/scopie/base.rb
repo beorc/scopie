@@ -57,7 +57,9 @@ class Scopie::Base
 
   def scope_value(scope_name, options, hash)
     key_name = key_name(scope_name, options)
-    return coerce_value_type(hash[key_name], options[:type]) if hash.key?(key_name)
+    reduced_hash = reduced_hash(hash, options)
+
+    return coerce_value_type(reduced_hash[key_name], options[:type]) if reduced_hash.key?(key_name)
     options[:default]
   end
 
@@ -71,16 +73,27 @@ class Scopie::Base
   end
 
   def scope_applicable?(scope_name, options, hash, method)
+    return false unless method_applicable?(method, options)
+
+    key_name = key_name(scope_name, options)
+    reduced_hash(hash, options).key?(key_name) || options.key?(:default)
+  end
+
+  def reduced_hash(hash, options)
+    return hash unless options.key?(:in)
+    hash.fetch(options[:in], {})
+  end
+
+  def method_applicable?(method, options)
+    return true unless method
+
     methods_white_list = Array(options[:only])
     methods_black_list = Array(options[:except])
 
-    if method
-      return false if methods_black_list.include?(method)
-      return false if methods_white_list.any? && !methods_white_list.include?(method)
-    end
+    return false if methods_black_list.include?(method)
+    return false if methods_white_list.any? && !methods_white_list.include?(method)
 
-    key_name = key_name(scope_name, options)
-    hash.key?(key_name) || options.key?(:default)
+    true
   end
 
   def self.reset_scopes_configuration!
