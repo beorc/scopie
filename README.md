@@ -26,6 +26,7 @@ class Graduation < ActiveRecord::Base
 
   scope :created_at_greater_than, ->(date) { where('entities.created_at >= ?', date.beginning_of_day) }
   scope :created_at_less_than, ->(date) { where('entities.created_at <= ?', date.end_of_day) }
+
   scope :updated_at_greater_than, ->(date) { where('entities.updated_at >= ?', date.beginning_of_day) }
   scope :updated_at_less_than, ->(date) { where('entities.updated_at <= ?', date.end_of_day) }
 
@@ -43,6 +44,9 @@ class GraduationsScopie < Scopie::Base
   has_scope :created_at_greater_than, in: :created_at, as: :start_at
   has_scope :created_at_less_than, in: :created_at, as: :end_at
 
+  has_scope :updated_at_greater_than, in: :updated_at, as: :start_at, type: :date
+  has_scope :updated_at_less_than, in: :updated_at, as: :end_at, type: :date
+
   has_scope :page, default: 1
   has_scope :per, default: 30
   
@@ -59,6 +63,14 @@ class GraduationsScopie < Scopie::Base
 
   def created_at_less_than(scope, value, _hash)
     scope.created_at_less_than(parse_date(value))
+  end
+
+  def updated_at_greater_than(scope, value, _hash)
+    scope.updated_at_greater_than(value)
+  end
+
+  def updated_at_less_than(scope, value, _hash)
+    scope.updated_at_less_than(value)
   end
 
   private
