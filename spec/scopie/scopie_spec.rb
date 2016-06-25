@@ -108,7 +108,7 @@ describe Scopie do
       end
     end
 
-    context 'given the "type" option' do
+    context 'given the "type: :boolean" option' do
       let(:options) { { type: :boolean } }
 
       context 'given a hash with the scope key' do
@@ -116,6 +116,32 @@ describe Scopie do
 
         it 'should call the scope method on target and pass coerced value' do
           expect(target).to receive(scope_name).once.with(true).and_return(target)
+          Scopie.apply_scopes(target, hash, scopie: scopie_instance)
+        end
+      end
+    end
+
+    context 'given the "type: :integer" option' do
+      let(:options) { { type: :integer } }
+
+      context 'given a hash with the scope key' do
+        let(:hash) { { scope_name => '123' } }
+
+        it 'should call the scope method on target and pass coerced value' do
+          expect(target).to receive(scope_name).once.with(123).and_return(target)
+          Scopie.apply_scopes(target, hash, scopie: scopie_instance)
+        end
+      end
+    end
+
+    context 'given the "type: :date" option' do
+      let(:options) { { type: :date } }
+
+      context 'given a hash with the scope key' do
+        let(:hash) { { scope_name => '2016-06-01' } }
+
+        it 'should call the scope method on target and pass coerced value' do
+          expect(target).to receive(scope_name).once.with(Date.parse(hash[scope_name])).and_return(target)
           Scopie.apply_scopes(target, hash, scopie: scopie_instance)
         end
       end

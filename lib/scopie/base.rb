@@ -30,9 +30,10 @@ class Scopie::Base
 
   def current_scopes(hash, method = nil)
     scopes = scopes_configuration.map do |scope_name, options|
-      next unless scope_applicable?(scope_name, options, hash, method)
       value = scope_value(scope_name, options, hash)
-      [scope_name, value]
+      next unless scope_applicable?(value, options, method)
+
+      [scope_name, coerce_value_type(value, options[:type])]
     end
 
     scopes.compact!
@@ -61,7 +62,7 @@ class Scopie::Base
     key_name = key_name(scope_name, options)
     reduced_hash = reduced_hash(hash, options)
 
-    return coerce_value_type(reduced_hash[key_name], options[:type]) if reduced_hash.key?(key_name)
+    return reduced_hash[key_name] if reduced_hash.key?(key_name)
     options[:default]
   end
 
@@ -74,10 +75,17 @@ class Scopie::Base
     TRUE_VALUES.include? value
   end
 
-  def scope_applicable?(scope_name, options, hash, method)
+  def coerce_to_integer(value)
+    Integer(value)
+  end
+
+  def coerce_to_date(value)
+    Date.parse(value)
+  end
+
+  def scope_applicable?(value, options, method)
     return false unless method_applicable?(method, options)
 
-    value = scope_value(scope_name, options, hash)
     is_value_present = value.respond_to?(:empty?) ? !value.empty? : !!value
 
     is_value_present || !!options[:allow_blank]
