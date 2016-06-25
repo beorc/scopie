@@ -6,9 +6,9 @@
 [![Dependency Status](https://gemnasium.com/beorc/scopie.svg)](https://gemnasium.com/beorc/scopie)
 [![Gem Version](https://badge.fury.io/rb/scopie.svg)](https://badge.fury.io/rb/scopie)
 
-Minimal mapping of incoming parameters to named scopes in your resources through OO design.
+A [has_scope](http://github.com/plataformatec/has_scope) alternative.
 
-Scopie allows you to map incoming controller parameters to named scopes in your resources.
+Scopie allows you to map incoming controller parameters to named scopes in your resources through OO design.
 
 Motivation:
 
