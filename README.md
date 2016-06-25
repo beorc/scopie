@@ -1,19 +1,21 @@
 ## Scopie
 
 [![Code Climate](https://codeclimate.com/github/beorc/scopie/badges/gpa.svg)](https://codeclimate.com/github/beorc/scopie)
+[![Build Status](https://travis-ci.org/beorc/scopie.svg?branch=master)](https://travis-ci.org/beorc/scopie)
+[![Coverage Status](https://coveralls.io/repos/github/beorc/scopie/badge.svg?branch=master)](https://coveralls.io/github/beorc/scopie?branch=master)
+[![Dependency Status](https://gemnasium.com/beorc/scopie.svg)](https://gemnasium.com/beorc/scopie)
+[![Gem Version](https://badge.fury.io/rb/scopie.svg)](https://badge.fury.io/rb/scopie)
 
-Minimal mapping of incoming parameters to named scopes in your resources through OO design
+Minimal mapping of incoming parameters to named scopes in your resources through OO design.
 
 Scopie allows you to map incoming controller parameters to named scopes in your resources.
 
-It is similar to [has_scope](http://github.com/plataformatec/has_scope).
+Motivation:
 
-The key differences are:
-
-* Dedicated class where the scopes are defined, so that your controller will be skinny.
-* It doesn't depend from ActiveSupport or ActionPack. Please have, a look at [scopie_rails](http://github.com/beorc/scopie_rails) if you are using Ruby on Rails framework.
-* To override default mapping behavior you don't need to pass a block - just define a method with the same name as scope.
-* You can DRY your custom scopes mapping logic by using helper methods defined in scopie class and use the same scopie class in multiple controllers.
+* Dedicated class for scopes mapping, so that the logic is isolated and your controller is skinny.
+* Dependencies free. Please have a look at [scopie_rails](http://github.com/beorc/scopie_rails) if you are using Ruby on Rails framework.
+* Ability to override default mapping behavior by definition of a method with the same name as scope in the scopie class.
+* Ability to DRY your custom scopes mapping logic using private methods defined in scopie class and use the same scopie class in multiple controllers.
 
 Imagine the following model called graduations:
 
