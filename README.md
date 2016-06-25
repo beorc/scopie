@@ -2,6 +2,7 @@
 
 [![Code Climate](https://codeclimate.com/github/beorc/scopie/badges/gpa.svg)](https://codeclimate.com/github/beorc/scopie)
 [![Build Status](https://travis-ci.org/beorc/scopie.svg?branch=master)](https://travis-ci.org/beorc/scopie)
+[![Coverage Status](https://coveralls.io/repos/github/beorc/scopie/badge.svg?branch=master)](https://coveralls.io/github/beorc/scopie?branch=master)
 [![Dependency Status](https://gemnasium.com/beorc/scopie.svg)](https://gemnasium.com/beorc/scopie)
 [![Gem Version](https://badge.fury.io/rb/scopie.svg)](https://badge.fury.io/rb/scopie)
 
