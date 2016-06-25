@@ -6,6 +6,10 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
+gem 'pry'
+gem 'rspec'
+gem 'rubocop'
+gem 'rake'
 gem 'coveralls', require: false
 
 # Declare any dependencies that are still in development here instead of in

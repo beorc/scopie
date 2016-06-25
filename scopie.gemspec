@@ -16,8 +16,4 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
 
   s.files = Dir['{lib}/**/*', 'LICENSE', 'README.md']
-
-  s.add_development_dependency 'rspec', '~> 3.4'
-  s.add_development_dependency 'rubocop', '~> 0.40'
-  s.add_development_dependency 'rake', '~> 11'
 end
