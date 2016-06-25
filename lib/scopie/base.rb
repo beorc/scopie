@@ -68,7 +68,12 @@ class Scopie::Base
 
   def coerce_value_type(value, type)
     return value unless type
-    send("coerce_to_#{type}", value)
+
+    coercion_method_name = "coerce_to_#{type}"
+
+    respond_to?(coercion_method_name, true) || fail(Scopie::InvalidOptionError.new("Unknown value for option 'type' provided: :#{type}"))
+
+    send(coercion_method_name, value)
   end
 
   def coerce_to_boolean(value)

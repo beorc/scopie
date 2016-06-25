@@ -2,6 +2,8 @@
 
 module Scopie
 
+  class InvalidOptionError < StandardError; end
+
   require 'scopie/base'
 
   def self.apply_scopes(target, hash, method: nil, scopie: Scopie::Base.new)
