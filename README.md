@@ -125,7 +125,7 @@ gem 'scopie'
 
 Scopie supports several options:
 
-* `:type` - Coerces the type of the parameter sent. Available options: boolean, integer, date.
+* `:type` - Coerces the type of the parameter sent. Available options: boolean, integer, float, date.
 
 * `:only` - In which actions the scope is applied.
 

@@ -83,6 +83,10 @@ class Scopie::Base
     Date.parse(value)
   end
 
+  def coerce_to_float(value)
+    Float(value)
+  end
+
   def scope_applicable?(value, options, method)
     return false unless method_applicable?(method, options)
 

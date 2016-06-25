@@ -134,6 +134,19 @@ describe Scopie do
       end
     end
 
+    context 'given the "type: :float" option' do
+      let(:options) { { type: :float } }
+
+      context 'given a hash with the scope key' do
+        let(:hash) { { scope_name => '1.23' } }
+
+        it 'should call the scope method on target and pass coerced value' do
+          expect(target).to receive(scope_name).once.with(1.23).and_return(target)
+          Scopie.apply_scopes(target, hash, scopie: scopie_instance)
+        end
+      end
+    end
+
     context 'given the "type: :date" option' do
       let(:options) { { type: :date } }
 
