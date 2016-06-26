@@ -41,6 +41,33 @@ describe Scopie do
       end
     end
 
+    context 'given no value' do
+      let(:hash) { Hash.new }
+
+      it 'should not call the scope method' do
+        expect(target).not_to receive(scope_name)
+        Scopie.apply_scopes(target, hash, scopie: scopie_instance)
+      end
+
+      context 'given the "allow_blank" option' do
+        let(:options) { { allow_blank: true } }
+
+        it 'should not call the scope method' do
+          expect(target).not_to receive(scope_name)
+          Scopie.apply_scopes(target, hash, scopie: scopie_instance)
+        end
+      end
+
+      context 'given the "default" option' do
+        let(:options) { { default: :default_value } }
+
+        it 'should call the scope method and pass default value' do
+          expect(target).to receive(scope_name).once.with(options[:default])
+          Scopie.apply_scopes(target, hash, scopie: scopie_instance)
+        end
+      end
+    end
+
     context 'given the "only" option' do
       let(:options) { { only: :index } }
 

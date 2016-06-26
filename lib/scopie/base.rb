@@ -2,8 +2,6 @@
 
 class Scopie::Base
 
-  TRUE_VALUES = ['true', true, '1', 1].freeze
-
   def self.scopes_configuration
     instance_variable_get(:@scopes_configuration) || {}
   end
@@ -33,7 +31,7 @@ class Scopie::Base
       value = scope_value(scope_name, options, hash)
       next unless scope_applicable?(value, options, method)
 
-      [scope_name, coerce_value_type(value, options[:type])]
+      [scope_name, value.coerced]
     end
 
     scopes.compact!
@@ -62,42 +60,14 @@ class Scopie::Base
     key_name = key_name(scope_name, options)
     reduced_hash = reduced_hash(hash, options)
 
-    return reduced_hash[key_name] if reduced_hash.key?(key_name)
-    options[:default]
-  end
-
-  def coerce_value_type(value, type)
-    return value unless type
-
-    coercion_method_name = "coerce_to_#{type}"
-
-    respond_to?(coercion_method_name, true) || fail(Scopie::InvalidOptionError.new("Unknown value for option 'type' provided: :#{type}"))
-
-    send(coercion_method_name, value)
-  end
-
-  def coerce_to_boolean(value)
-    TRUE_VALUES.include? value
-  end
-
-  def coerce_to_integer(value)
-    Integer(value)
-  end
-
-  def coerce_to_date(value)
-    Date.parse(value)
-  end
-
-  def coerce_to_float(value)
-    Float(value)
+    Scopie::Value.new(reduced_hash, key_name, options)
   end
 
   def scope_applicable?(value, options, method)
     return false unless method_applicable?(method, options)
+    return false unless value.given?
 
-    is_value_present = value.respond_to?(:empty?) ? !value.empty? : !!value
-
-    is_value_present || !!options[:allow_blank]
+    value.present? || !!options[:allow_blank]
   end
 
   def reduced_hash(hash, options)
