@@ -187,6 +187,24 @@ describe Scopie do
       end
     end
 
+    context 'given the "type: :unknown" option' do
+      let(:options) { { type: :unknown } }
+
+      context 'given a hash with the scope key' do
+        let(:hash) { { scope_name => '2016-06-01' } }
+
+        it 'should not call the scope method on target' do
+          expect(target).not_to receive(scope_name)
+        end
+
+        it 'should raise exception' do
+          expect do
+            Scopie.apply_scopes(target, hash, scopie: scopie_instance)
+          end.to raise_error(Scopie::InvalidOptionError, "Unknown value for option 'type' provided: :#{options[:type]}")
+        end
+      end
+    end
+
     context 'given the scope metod defined in scopie' do
       let(:hash) { { another_scope_name => 'true' } }
 

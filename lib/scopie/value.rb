@@ -51,7 +51,7 @@ class Scopie::Value
 
     coercion_method_name = "coerce_to_#{type}"
 
-    respond_to?(coercion_method_name, true) || raise(Scopie::InvalidOptionError.new, "Unknown value for option 'type' provided: :#{type}")
+    respond_to?(coercion_method_name, true) || raise(Scopie::InvalidOptionError, "Unknown value for option 'type' provided: :#{type}")
 
     send(coercion_method_name, value)
   end
