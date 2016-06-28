@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
-class Scopie::Value < Struct.new(:hash, :key_name, :options)
+class Scopie::Value
 
   TRUE_VALUES = ['true', true, '1', 1].freeze
 
+  def initialize(hash, key_name, options)
+    @hash = hash
+    @key_name = key_name
+    @options = options
+  end
+
   def raw
-    return hash[key_name] if hash.key?(key_name)
+    return @hash[@key_name] if @hash.key?(@key_name)
     fetch_default
   end
 
@@ -14,15 +20,15 @@ class Scopie::Value < Struct.new(:hash, :key_name, :options)
   end
 
   def fetch_type
-    options[:type]
+    @options[:type]
   end
 
   def fetch_default
-    options[:default]
+    @options[:default]
   end
 
   def has_default?
-    options.key?(:default)
+    @options.key?(:default)
   end
 
   def given?
@@ -30,7 +36,7 @@ class Scopie::Value < Struct.new(:hash, :key_name, :options)
   end
 
   def key_passed?
-    hash.key?(key_name)
+    @hash.key?(@key_name)
   end
 
   def present?
@@ -45,7 +51,7 @@ class Scopie::Value < Struct.new(:hash, :key_name, :options)
 
     coercion_method_name = "coerce_to_#{type}"
 
-    respond_to?(coercion_method_name, true) || fail(Scopie::InvalidOptionError.new("Unknown value for option 'type' provided: :#{type}"))
+    respond_to?(coercion_method_name, true) || raise(Scopie::InvalidOptionError.new, "Unknown value for option 'type' provided: :#{type}")
 
     send(coercion_method_name, value)
   end

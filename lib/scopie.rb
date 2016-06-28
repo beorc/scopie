@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module Scopie
-
   class InvalidOptionError < StandardError; end
 
   RESULTS_TO_IGNORE = [true, false].freeze
@@ -16,5 +15,4 @@ module Scopie
   def self.current_scopes(hash, method: nil, scopie: Scopie::Base.new)
     scopie.current_scopes(hash, method)
   end
-
 end

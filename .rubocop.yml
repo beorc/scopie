@@ -1,14 +1,12 @@
 AllCops:
   TargetRubyVersion: 2.3
-  Exclude:
-    - 'vendor/**/*'
-    - 'bin/*'
+
+Style/EmptyLinesAroundClassBody:
+  Enabled: true
+  EnforcedStyle: empty_lines
 
 Style/SpaceAroundEqualsInParameterDefault:
   Enabled: true
-
-Style/SignalException:
-  Enabled: false
 
 Style/SymbolLiteral:
   Enabled: true
@@ -19,22 +17,13 @@ Style/SpaceAroundOperators:
 Style/ParallelAssignment:
   Enabled: true
 
-Style/ParenthesesAroundCondition:
-  Enabled: false
-
 Style/NumericLiterals:
   MinDigits: 14
 
 Style/Not:
   Enabled: true
 
-Style/Next:
-  Enabled: false
-
 Style/ClosingParenthesisIndentation:
-  Enabled: false
-
-Style/WordArray:
   Enabled: false
 
 Style/SpaceAfterComma:
@@ -92,14 +81,10 @@ Style/EmptyLineBetweenDefs:
   Enabled: true
 
 Style/EmptyLines:
-  Enabled: false
+  Enabled: true
 
 Style/EmptyLinesAroundAccessModifier:
   Enabled: true
-
-Style/EmptyLinesAroundClassBody:
-  Enabled: true
-  EnforcedStyle: empty_lines
 
 Style/EmptyLiteral:
   Enabled: true

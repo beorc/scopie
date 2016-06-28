@@ -253,11 +253,13 @@ describe Scopie do
     let(:hash) { { scope_name => 'test' } }
     let(:options) { Hash.new }
 
-    before(:each) { scopie_class.has_scope(scope_name, another_scope_name, options) }
+    before(:each) do
+      scopie_class.has_scope(scope_name, another_scope_name, options)
+    end
 
     it 'should return a hash that contains scopes with its values' do
       scopes = Scopie.current_scopes(hash, scopie: scopie_instance)
-      expect(scopes).to eq({ scope_name => hash[scope_name] })
+      expect(scopes).to eq(scope_name => hash[scope_name])
     end
   end
 end
