@@ -4,6 +4,8 @@ module Scopie
 
   class InvalidOptionError < StandardError; end
 
+  RESULTS_TO_IGNORE = [true, false].freeze
+
   require 'scopie/value'
   require 'scopie/base'
 
