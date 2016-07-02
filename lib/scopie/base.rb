@@ -10,6 +10,43 @@ class Scopie::Base
     self.class.scopes_configuration
   end
 
+  # Detects params from url and apply as scopes to your classes.
+  #
+  # == Options
+  #
+  # * <tt>:type</tt> - Coerces the type of the parameter sent.
+  #
+  # * <tt>:only</tt> - In which actions the scope is applied.
+  #
+  # * <tt>:except</tt> - In which actions the scope is not applied.
+  #
+  # * <tt>:as</tt> - The key in the params hash expected to find the scope.
+  #                  Defaults to the scope name.
+  #
+  # * <tt>:default</tt> - Default value for the scope. Whenever supplied the scope
+  #                       is always called.
+  #
+  # * <tt>:allow_blank</tt> - Blank values are not sent to scopes by default. Set to true to overwrite.
+  #
+  # == Method usage
+  #
+  # You can also define a method having the same name as a scope. The current scope, value and params are yielded
+  # to the block so the user can apply the scope on its own. The method can return new scope or the boolean value.
+  # In the latter case will be used not modified scope. This is useful in case we
+  # need to manipulate the given value:
+  #
+  #   has_scope :category
+  #
+  #   def category(scope, value, _hash)
+  #     value != 'all' && scope.by_category(value)
+  #   end
+  #
+  #   has_scope :not_voted_by_me, type: :boolean
+  #
+  #   def not_voted_by_me(scope, _value, _hash)
+  #     scope.not_voted_by(controller.current_user.id) # The controller method is available in the scopie_rails gem
+  #   end
+  #
   def self.has_scope(*scopes, **options)
     @scopes_configuration ||= {}
 

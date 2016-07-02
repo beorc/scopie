@@ -90,7 +90,7 @@ Now, if you want to apply them to an specific resource, you just need to call `a
 class GraduationsController < ApplicationController
 
   def index
-    @graduations = Scopie.apply_scopes(Graduation, method: :index, scopie: Scopies::GraduationsScopie.new).all
+    @graduations = Scopie.apply_scopes(Graduation, method: :index, scopie: GraduationsScopie.new).all
   end
 
 end
