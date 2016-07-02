@@ -123,6 +123,12 @@ Add `scopie` to your Gemfile or install it from Rubygems.
 gem 'scopie'
 ```
 
+## Mutation testing
+
+```ruby
+mutant --include lib --require scopie --use rspec Scopie*
+```
+
 ## Options
 
 Scopie supports several options:

@@ -35,5 +35,7 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.after(:each) { SubjectClass.send(:reset_scopes_configuration!) }
+  config.after(:each) do
+    SubjectClass.send(:reset_scopes_configuration!) if defined?(SubjectClass)
+  end
 end

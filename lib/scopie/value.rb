@@ -19,6 +19,17 @@ class Scopie::Value
     coerce_to_type(raw, fetch_type)
   end
 
+  def given?
+    key_passed? || has_default?
+  end
+
+  def present?
+    value = raw
+    value.respond_to?(:empty?) ? !value.empty? : !!value
+  end
+
+  private
+
   def fetch_type
     @options[:type]
   end
@@ -31,20 +42,9 @@ class Scopie::Value
     @options.key?(:default)
   end
 
-  def given?
-    key_passed? || has_default?
-  end
-
   def key_passed?
     @hash.key?(@key_name)
   end
-
-  def present?
-    value = raw
-    value.respond_to?(:empty?) ? !value.empty? : !!value
-  end
-
-  private
 
   def coerce_to_type(value, type)
     return value unless type
