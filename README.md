@@ -125,9 +125,7 @@ gem 'scopie'
 
 ## Mutation testing
 
-```ruby
-mutant --include lib --require scopie --use rspec Scopie*
-```
+    mutant --include lib --require scopie --use rspec Scopie*
 
 ## Options
 

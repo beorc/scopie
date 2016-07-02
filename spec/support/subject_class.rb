@@ -2,7 +2,8 @@
 
 class SubjectClass < Scopie::Base
 
-  def another_scope(_target, _value, _hash)
+  def another_scope(target, _value, _hash)
+    target
   end
 
 end

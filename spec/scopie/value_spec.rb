@@ -112,28 +112,4 @@ describe Scopie::Value do
       end
     end
   end
-
-  describe '#given?' do
-    context 'given value' do
-      it 'should return true' do
-        expect(subject.given?).to eq true
-      end
-    end
-
-    context 'given empty hash' do
-      let(:hash) { Hash.new }
-
-      it 'should return false' do
-        expect(subject.given?).to eq false
-      end
-
-      context 'given default value' do
-        let(:options) { { default: 'default text' } }
-
-        it 'should return true' do
-          expect(subject.given?).to eq true
-        end
-      end
-    end
-  end
 end
