@@ -49,6 +49,7 @@ class Scopie::Base
   #
   def self.has_scope(*scopes, **options)
     @scopes_configuration ||= {}
+    normalize_options!(options)
 
     scopes.each do |scope|
       @scopes_configuration[scope.to_sym] = options
@@ -118,12 +119,13 @@ class Scopie::Base
 
   def method_applicable?(method, options)
     return true unless method
+    action = method.to_s
 
-    methods_white_list = Array(options[:only])
-    methods_black_list = Array(options[:except])
+    methods_white_list = options[:only]
+    methods_black_list = options[:except]
 
-    return false if methods_black_list.include?(method)
-    return false if methods_white_list.any? && !methods_white_list.include?(method)
+    return false if methods_black_list.include?(action)
+    return false if methods_white_list.any? && !methods_white_list.include?(action)
 
     true
   end
@@ -133,5 +135,16 @@ class Scopie::Base
   end
 
   private_class_method :reset_scopes_configuration!
+
+  def self.normalize_options!(options)
+    [:only, :except].each do |key|
+      options[key] = Array(options[key]).map(&:to_s)
+      options[key].reject!(&:empty?)
+    end
+
+    options
+  end
+
+  private_class_method :normalize_options!
 
 end

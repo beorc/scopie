@@ -11,13 +11,13 @@ describe Scopie::Base do
   let(:another_target) { double }
   let(:options) do
     {
-      only: only_method_name,
-      except: except_method_name
+      only: [only_method_name.to_s],
+      except: [except_method_name.to_s]
     }
   end
 
   before(:each) do
-    described_class.has_scope(scope_name, options)
+    described_class.has_scope(scope_name, { only: only_method_name, except: except_method_name })
     described_class.has_scope(another_scope_name)
   end
 
@@ -32,10 +32,14 @@ describe Scopie::Base do
       expect(subject.scopes_configuration).to eq({
                                                    test_scope:
                                                      {
-                                                       only: :only_test_method,
-                                                       except: :except_test_method
+                                                       only: ['only_test_method'],
+                                                       except: ['except_test_method']
                                                      },
-                                                   another_scope: {}
+                                                   another_scope:
+                                                     {
+                                                       only: [],
+                                                       except: []
+                                                     }
                                                  })
     end
   end
@@ -228,7 +232,7 @@ describe Scopie::Base do
   describe '#method_applicable?' do
     context 'given no method' do
       let(:method) { nil }
-      let(:options) { Hash.new }
+      let(:options) { { except: [], only: [] } }
 
       it 'should return true' do
         expect(subject.send(:method_applicable?, method, options)).to eq true
@@ -236,7 +240,7 @@ describe Scopie::Base do
     end
 
     context 'given black list' do
-      let(:options) { { except: :index } }
+      let(:options) { { only: [], except: ['index'] } }
 
       context 'given the blacklisted method' do
         let(:method) { :index }
@@ -256,7 +260,7 @@ describe Scopie::Base do
     end
 
     context 'given white list' do
-      let(:options) { { only: :index } }
+      let(:options) { { only: ['index'], except: [] } }
 
       context 'given the not whitelisted method' do
         let(:method) { :show }
