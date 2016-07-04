@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 module Scopie
-  class InvalidOptionError < StandardError; end
-
   RESULTS_TO_IGNORE = [true, false].freeze
 
   require 'scopie/version'
+  require 'scopie/invalid_type_error'
   require 'scopie/value'
   require 'scopie/base'
 

@@ -200,7 +200,7 @@ describe Scopie do
         it 'should raise exception' do
           expect do
             Scopie.apply_scopes(target, hash, scopie: scopie_instance)
-          end.to raise_error(Scopie::InvalidOptionError, "Unknown value for option 'type' provided: :#{options[:type]}")
+          end.to raise_error(Scopie::InvalidTypeError, "Unknown value for option 'type' provided: :#{options[:type]}")
         end
       end
     end

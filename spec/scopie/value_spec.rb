@@ -76,7 +76,7 @@ describe Scopie::Value do
       it 'should raise exception' do
         expect do
           subject.coerced
-        end.to raise_error(Scopie::InvalidOptionError, "Unknown value for option 'type' provided: :#{options[:type]}")
+        end.to raise_error(Scopie::InvalidTypeError, "Unknown value for option 'type' provided: :#{options[:type]}")
       end
     end
   end

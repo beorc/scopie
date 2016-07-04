@@ -11,8 +11,7 @@ class Scopie::Value
   end
 
   def raw
-    return @hash[@key_name] if @hash.key?(@key_name)
-    fetch_default
+    @hash.fetch(@key_name) { fetch_default }
   end
 
   def coerced
@@ -51,7 +50,7 @@ class Scopie::Value
 
     coercion_method_name = "coerce_to_#{type}"
 
-    respond_to?(coercion_method_name, true) || raise(Scopie::InvalidOptionError, "Unknown value for option 'type' provided: :#{type}")
+    respond_to?(coercion_method_name, true) || raise(Scopie::InvalidTypeError.new(type))
 
     send(coercion_method_name, value)
   end
