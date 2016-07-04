@@ -84,8 +84,11 @@ class Scopie::Base
                target.public_send(scope_name, value)
              end
 
-    return target if Scopie::RESULTS_TO_IGNORE.include?(result)
-    result
+    if Scopie::RESULTS_TO_IGNORE.include?(result)
+      target
+    else
+      result
+    end
   end
 
   def key_name(scope_name, options)
