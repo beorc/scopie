@@ -26,6 +26,6 @@ task :build do
 end
 
 desc "Release version #{Scopie::VERSION}"
-task :release => [:build, :release_tag, :push] do
+task release: [:build, :release_tag, :push] do
   system "bundle exec gem push scopie-#{Scopie::VERSION}.gem"
 end

@@ -2,7 +2,7 @@
 
 class Scopie::Value
 
-  TRUE_VALUES = ['true', true, '1', 1].freeze
+  TRUE_VALUES = ['true'.freeze, true, '1'.freeze, 1].freeze
 
   def initialize(hash, key_name, options)
     @hash = hash
