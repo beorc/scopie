@@ -147,6 +147,6 @@ Scopie supports several options:
 
 ## Thanks
 
-Scopie was inspired by [has_scope](http://github.com/plataformatec/has_scope) and [pundit](http://github.com/elabs/pubdit).
+Scopie was inspired by [has_scope](http://github.com/plataformatec/has_scope) and [pundit](http://github.com/elabs/pundit).
 
 Thanks to both.
