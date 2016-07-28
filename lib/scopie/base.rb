@@ -114,7 +114,7 @@ class Scopie::Base
 
   def reduced_hash(hash, options)
     return hash unless options.key?(:in)
-    hash.fetch(options[:in], {})
+    hash.fetch(options[:in]) { {} }
   end
 
   def method_applicable?(method, options)
