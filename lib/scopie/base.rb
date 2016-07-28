@@ -57,7 +57,7 @@ class Scopie::Base
   end
 
   def apply_scopes(target, hash, method = nil)
-    current_scopes(hash, method).each do |scope_name, value|
+    current_scopes_values(hash, method).each do |scope_name, value|
       target = apply_scope(scope_name, target, value, hash)
     end
 
@@ -65,24 +65,33 @@ class Scopie::Base
   end
 
   def current_scopes(hash, method = nil)
+    hsh = current_scopes_values(hash, method)
+    hsh.update(hsh) do |_, value|
+      value.coerced
+    end
+  end
+
+  private
+
+  def current_scopes_values(hash, method)
     scopes = scopes_configuration.map do |scope_name, options|
       value = scope_value(scope_name, options, hash)
       next unless scope_applicable?(value, options, method)
 
-      [scope_name, value.coerced]
+      [scope_name, value]
     end
 
     scopes.compact!
     scopes.to_h
   end
 
-  private
-
   def apply_scope(scope_name, target, value, hash)
     result = if respond_to?(scope_name)
-               public_send(scope_name, target, value, hash)
+               public_send(scope_name, target, value.coerced, hash)
              else
-               target.public_send(scope_name, value)
+               args = [scope_name]
+               args << value.coerced if value.present? || value.allow_blank?
+               target.public_send(*args)
              end
 
     if Scopie::RESULTS_TO_IGNORE.include?(result)
@@ -109,7 +118,7 @@ class Scopie::Base
     return false unless method_applicable?(method, options)
     return false unless value.given?
 
-    value.present? || !!options[:allow_blank]
+    true
   end
 
   def reduced_hash(hash, options)

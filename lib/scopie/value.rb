@@ -27,6 +27,10 @@ class Scopie::Value
     value.respond_to?(:empty?) ? !value.empty? : !!value
   end
 
+  def allow_blank?
+    @options[:allow_blank]
+  end
+
   private
 
   def fetch_type

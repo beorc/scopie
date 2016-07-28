@@ -26,15 +26,15 @@ describe Scopie do
     context 'given blank value' do
       let(:scope_value) { '' }
 
-      it 'should not call the scope method' do
-        expect(target).not_to receive(scope_name)
+      it 'should call the scope method without arguments' do
+        expect(target).to receive(scope_name).once.with(no_args)
         Scopie.apply_scopes(target, hash, scopie: scopie_instance)
       end
 
       context 'given the "allow_blank" option' do
         let(:options) { { allow_blank: true } }
 
-        it 'should call the scope method on target' do
+        it 'should call the scope method with scope value' do
           expect(target).to receive(scope_name).once.with(scope_value)
           Scopie.apply_scopes(target, hash, scopie: scopie_instance)
         end
