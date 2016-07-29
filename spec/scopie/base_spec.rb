@@ -193,6 +193,14 @@ describe Scopie::Base do
         it 'should return true' do
           expect(subject.send(:scope_applicable?, value, options, method)).to eq true
         end
+
+        context 'given the :ignore_blank option set to true' do
+          before(:each) { options[:ignore_blank] = true }
+
+          it 'should return true' do
+            expect(subject.send(:scope_applicable?, value, options, method)).to eq false
+          end
+        end
       end
     end
   end

@@ -118,7 +118,7 @@ class Scopie::Base
     return false unless method_applicable?(method, options)
     return false unless value.given?
 
-    true
+    value.present? || !options[:ignore_blank]
   end
 
   def reduced_hash(hash, options)
