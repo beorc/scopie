@@ -23,10 +23,14 @@ class Scopie::Base
   # * <tt>:as</tt> - The key in the params hash expected to find the scope.
   #                  Defaults to the scope name.
   #
+  # * <tt>:in</tt> - The key in the params hash expected to contain a hash holding scope name as a value.
+  #
   # * <tt>:default</tt> - Default value for the scope. Whenever supplied the scope
   #                       is always called.
   #
   # * <tt>:allow_blank</tt> - Blank values are not sent to scopes by default. Set to true to overwrite.
+  #
+  # * <tt>:ignore_blank</tt> - Set to true to not apply the scope if blank value is given.
   #
   # == Method usage
   #
